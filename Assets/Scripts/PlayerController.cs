@@ -4,8 +4,8 @@
 public class PlayerController : MonoBehaviour
 {
     Rigidbody rigidbody;
-    public float speed;//kararkterin yerdeki hızı
-    public float airSpeed;//karakterin havadaki hızı
+    float speed=20;
+    float airSpeed=20;
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
     [Range(1, 10)]
@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 turnRot;
     public float rotspeed;
-
+    bool isInterracting=false;
     private void Start()    {
         rigidbody = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {   //<z ekseninde hareket>
         float z = Input.GetAxis("Horizontal");
         Vector3 move = Vector3.forward * z;
+        
         if (rigidbody.velocity.y == 0)
         {
             rigidbody.AddForce(move * speed * Time.deltaTime, ForceMode.VelocityChange);
@@ -50,10 +51,19 @@ public class PlayerController : MonoBehaviour
         //</zıplama>
         //<karakter yönü>
         if (z> 0) { turnRot = Vector3.forward; } else if(z < 0) { turnRot = Vector3.back; }
-        Debug.Log(turnRot);
-        //rigidbody.MoveRotation(Quaternion.LookRotation(turnRot));
-        rigidbody.MoveRotation(Quaternion.LookRotation(turnRot));
-        //</karakter yönü>
+        if (isInterracting == false) { rigidbody.MoveRotation(Quaternion.LookRotation(turnRot)); }
         
+        //</karakter yönü>
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            speed = 10;
+            isInterracting = true;
+        }
+        else
+        {
+            speed = 20;
+            isInterracting = false;
+        }
     }
 }
