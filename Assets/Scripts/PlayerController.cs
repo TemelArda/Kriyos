@@ -4,7 +4,7 @@
 public class PlayerController : MonoBehaviour
 {
     Rigidbody rigidbody;
-    float speed=20;
+    public float speed = 20f;
     float airSpeed=20;
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
